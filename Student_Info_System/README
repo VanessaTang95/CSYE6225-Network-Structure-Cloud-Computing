@@ -1,0 +1,94 @@
+GitHub link:https://github.com/VanessaTang95/CSYE6225Network_Structure-Cloud_Computing
+Elastic Beanstalk link:http://studentmanagementsystem-env.p4yukyvzms.us-west-2.elasticbeanstalk.com/
+
+Api instruction:
+For each entity:
+<Course>
+1. GET
+    webapi/courses/
+    webapi/courses/{courseid}
+     
+2. POST
+     webapi/courses/
+     body:{
+     	"courseId":1,
+		"courseName":"Network Structure & Cloud Computing",
+		"programId":"00011"
+     }
+     
+3. PUT
+	webapi/courses/{courseid}
+	body:{
+     	"courseName":"Cloud Computing",
+		"programId":"00011"
+     }
+4. DELETE
+ 	webapi/courses/{courseid}
+ 	
+ 	
+<Professor>
+1. GET
+	webapi/professors
+	webapi/professors/{professorid}
+
+2. POST
+	webapi/professors
+	body
+	{
+ 	"pro_Name":"June",
+ 	"joingDate":"20110101"
+	}
+	
+3. PUT
+     webapi/professors/{professorId}
+     body
+      {
+	 "belongingProgram":"CS",
+ 	 "teachingCourses":["Computing Principle","Algorithm"]
+	}
+	
+4. DELETE
+	webapi/professors/{professorId}
+
+<Program>
+1. GET
+	webapi/programs
+	webapi/programs/{programId}
+
+2. POST
+	webapi/programs
+	{
+	"programId":1,
+	"programName":"Computer Science"}
+	
+3. PUT
+	webapi/programs/{programId}
+	{
+    "coursesOfProgram": ["Algorithm","Data Structure","Java Development"],
+    "enrolledStuId": [001,002],
+    "professorsId": [111,123]
+	}
+	
+4. DELETE
+	webapi/programs/{programId}
+	
+<Student>
+1. GET
+	webapi/students
+	webapi/students/{studentId}
+
+2. POST
+	webapi/students
+	{
+	"studentId":1,
+	"name":"Yue"
+	}
+	
+3. PUT
+	webapi/students/{studentId}
+	{
+	"imageUrl":"www.xxxxx.com/xxxxx",
+	"programName":"Information Systmes"
+	}
+4.DELETE
+	webapi/students/{studentId}
