@@ -11,11 +11,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 @DynamoDBTable(tableName="Lecture")
 public class Lecture {
 	private String Id;
-	private String lec_Name;
-	private String lec_Id;
+	private String lectureName;
+	private String lectureId;
 	private List<String> nodes;
 	private List<String> materials;
-	private String lec_course_id;//assume one lecture only relate to one course
+	private String lecture_course_id;//assume one lecture only relate to one course
 	
 	public Lecture() {
 		this.nodes=new ArrayList<>();
@@ -25,11 +25,11 @@ public class Lecture {
 
 	public Lecture(String lec_Name, String lec_Id, List<String> nodes, List<String> materials, String lec_course_id) {
 		super();
-		this.lec_Name = lec_Name;
-		this.lec_Id = lec_Id;
+		this.lectureName = lec_Name;
+		this.lectureId = lec_Id;
 		this.nodes = nodes;
 		this.materials = materials;
-		this.lec_course_id = lec_course_id;
+		this.lecture_course_id = lec_course_id;
 	}
 
 	
@@ -44,26 +44,7 @@ public class Lecture {
 		Id = id;
 	}
 
-
-	@DynamoDBAttribute(attributeName="LectureName")
-	public String getLec_Name() {
-		return lec_Name;
-	}
-
-	public void setLec_Name(String lec_Name) {
-		this.lec_Name = lec_Name;
-	}
-
-	@DynamoDBIndexHashKey(attributeName="LectureId",globalSecondaryIndexName="Lecture_LectureId")
-	public String getLec_Id() {
-		return lec_Id;
-	}
-
-	public void setLec_Id(String lec_Id) {
-		this.lec_Id = lec_Id;
-	}
-
-	@DynamoDBAttribute(attributeName="Nodes")
+	@DynamoDBAttribute(attributeName="nodes")
 	public List<String> getNodes() {
 		return nodes;
 	}
@@ -72,7 +53,7 @@ public class Lecture {
 		this.nodes = nodes;
 	}
 
-	@DynamoDBAttribute(attributeName="Materials")
+	@DynamoDBAttribute(attributeName="materials")
 	public List<String> getMaterials() {
 		return materials;
 	}
@@ -81,14 +62,38 @@ public class Lecture {
 		this.materials = materials;
 	}
 
-	@DynamoDBAttribute(attributeName="RelatedCourseId")
-	public String getLec_course_id() {
-		return lec_course_id;
+	@DynamoDBAttribute(attributeName="lectureName")
+	public String getLectureName() {
+		return lectureName;
 	}
 
-	public void setLec_course_id(String lec_course_id) {
-		this.lec_course_id = lec_course_id;
+
+	public void setLectureName(String lectureName) {
+		this.lectureName = lectureName;
 	}
+
+
+	@DynamoDBIndexHashKey(attributeName="lectureId",globalSecondaryIndexName="lectureId-index")
+	public String getLectureId() {
+		return lectureId;
+	}
+
+
+	public void setLectureId(String lectureId) {
+		this.lectureId = lectureId;
+	}
+
+
+	@DynamoDBAttribute(attributeName="relatedCourses")
+	public String getLecture_course_id() {
+		return lecture_course_id;
+	}
+
+
+	public void setLecture_course_id(String lecture_course_id) {
+		this.lecture_course_id = lecture_course_id;
+	}
+
 	
 	
 }

@@ -33,7 +33,7 @@ public class Board {
 		Id = id;
 	}
 	
-	@DynamoDBIndexHashKey(attributeName="BoardId",globalSecondaryIndexName="Board_BoardId")
+	@DynamoDBIndexHashKey(attributeName="boardId",globalSecondaryIndexName="boardId-index")
 	public String getBoardId() {
 		return boardId;
 	}
@@ -42,7 +42,7 @@ public class Board {
 		this.boardId = boardId;
 	}
 
-	@DynamoDBAttribute(attributeName="CourseId")
+	@DynamoDBAttribute(attributeName="courseId")
 	public String getCourseId() {
 		return courseId;
 	}

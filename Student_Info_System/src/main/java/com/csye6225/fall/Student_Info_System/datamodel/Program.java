@@ -14,13 +14,13 @@ public class Program {
 	private String programName;
 	private String programId;
 	private List<String> coursesOfProgram;
-	private List<Student> enrolledStuId;
-	private List<Professor> professorsId;
+	private List<Student> enrolledStudent;
+	private List<Professor> hasProfessors;
 	
 	public Program() {
 		this.coursesOfProgram=new ArrayList<>();
-		this.enrolledStuId=new ArrayList<>();
-		this.professorsId=new ArrayList<>();
+		this.enrolledStudent=new ArrayList<>();
+		this.hasProfessors=new ArrayList<>();
 	}
 	
 	public Program(String programId,String programName) {
@@ -48,7 +48,7 @@ public class Program {
 		this.programName = programName;
 	}
 
-	@DynamoDBIndexHashKey(attributeName="programId",globalSecondaryIndexName="Program_ProgramId")
+	@DynamoDBIndexHashKey(attributeName="programId",globalSecondaryIndexName="programId-index")
 	public String getProgramId() {
 		return programId;
 	}
@@ -67,21 +67,21 @@ public class Program {
 	}
 
 	@DynamoDBAttribute(attributeName="enrolledStudentsId")
-	public List<Student> getEnrolledStuId() {
-		return enrolledStuId;
+	public List<Student> getEnrolledStudent() {
+		return enrolledStudent;
 	}
 
-	public void setEnrolledStuId(List<Student> enrolledStuId) {
-		this.enrolledStuId = enrolledStuId;
+	public void setEnrolledStudent(List<Student> enrolledStuId) {
+		this.enrolledStudent = enrolledStuId;
 	}
 
 	@DynamoDBAttribute(attributeName="professorID")
-	public List<Professor> getProfessorsId() {
-		return professorsId;
+	public List<Professor> getHasProfessors() {
+		return hasProfessors;
 	}
 
-	public void setProfessorsId(List<Professor> professorsId) {
-		this.professorsId = professorsId;
+	public void setHasProfessors(List<Professor> professorsId) {
+		this.hasProfessors = professorsId;
 	}
 	
 	

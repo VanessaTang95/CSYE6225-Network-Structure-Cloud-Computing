@@ -31,7 +31,7 @@ public class AnnouncementService {
 		eav.put(":val1", new AttributeValue().withS(announcementId));
 		eav.put(":val2", new AttributeValue().withS(boardId));
 		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("AnnouncementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
+				.withFilterExpression("announcementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
 		List<Announcements> result=mapper.scan(Announcements.class, scanExpression);
 		if(result.size()!=0) {
 			return result.get(0);
@@ -62,7 +62,7 @@ public class AnnouncementService {
 		eav.put(":val1", new AttributeValue().withS(announcementId));
 		eav.put(":val2", new AttributeValue().withS(boardId));
 		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("AnnouncementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
+				.withFilterExpression("announcementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
 		List<Announcements> result=mapper.scan(Announcements.class, scanExpression);
 		if(result.size()!=0) {
 			Announcements removedone=result.get(0);
@@ -78,7 +78,7 @@ public class AnnouncementService {
 		eav.put(":val1", new AttributeValue().withS(announcementId));
 		eav.put(":val2", new AttributeValue().withS(boardId));
 		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("AnnouncementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
+				.withFilterExpression("announcementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
 		List<Announcements> result=mapper.scan(Announcements.class, scanExpression);
 		if(result.size()!=0) {
 			String Id=result.get(0).getId();

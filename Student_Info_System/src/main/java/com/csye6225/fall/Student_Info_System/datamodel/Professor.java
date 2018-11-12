@@ -37,7 +37,7 @@ public class Professor {
 		Id = id;
 	}
 
-	@DynamoDBIndexHashKey(attributeName="ProfessorId",globalSecondaryIndexName="Professor_ProfessorId")
+	@DynamoDBIndexHashKey(attributeName="professorId",globalSecondaryIndexName="professorId-index")
 	public String getProfessorId() {
 		return professorId;
 	}
@@ -46,7 +46,7 @@ public class Professor {
 		this.professorId = professorId;
 	}
 
-	@DynamoDBAttribute(attributeName="FirstName")
+	@DynamoDBAttribute(attributeName="firstName")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -55,7 +55,7 @@ public class Professor {
 		this.firstName = firstName;
 	}
 
-	@DynamoDBAttribute(attributeName="LastName")
+	@DynamoDBAttribute(attributeName="lastName")
 	public String getLastName() {
 		return LastName;
 	}
@@ -64,7 +64,7 @@ public class Professor {
 		LastName = lastName;
 	}
 
-	@DynamoDBAttribute(attributeName="JoiningDate")
+	@DynamoDBAttribute(attributeName="joiningDate")
 	public String getJoiningDate() {
 		return joiningDate;
 	}
@@ -73,7 +73,7 @@ public class Professor {
 		this.joiningDate = joiningDate;
 	}
 
-	@DynamoDBAttribute(attributeName="Department")
+	@DynamoDBAttribute(attributeName="department")
 	public String getDepartment() {
 		return department;
 	}

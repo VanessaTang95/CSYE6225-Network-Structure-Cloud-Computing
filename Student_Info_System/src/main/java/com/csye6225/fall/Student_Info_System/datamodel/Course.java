@@ -50,7 +50,7 @@ public class Course {
 		Id = id;
 	}
 	
-	@DynamoDBIndexHashKey(attributeName="courseId",globalSecondaryIndexName="Course_CourseId")
+	@DynamoDBIndexHashKey(attributeName="courseId",globalSecondaryIndexName="courseId-index")
 	public String getCourseId() {
 		return courseId;
 	}

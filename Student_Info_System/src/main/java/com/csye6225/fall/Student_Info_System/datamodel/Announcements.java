@@ -34,7 +34,7 @@ public class Announcements {
 		Id = id;
 	}
 
-	@DynamoDBIndexRangeKey(attributeName="announcementId", localSecondaryIndexName="announcementId")
+	@DynamoDBIndexRangeKey(attributeName="announcementId", globalSecondaryIndexName="announcementId-index")
 	public String getAnnouncementId() {
 		return announcementId;
 	}
