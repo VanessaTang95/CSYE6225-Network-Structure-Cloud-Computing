@@ -31,7 +31,7 @@ public class ProgramResource {
 	@GET
 	@Path("/getOneProgram/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Program getProgram(@PathParam("programId")long programId) {
+	public Program getProgram(@PathParam("programId")String programId) {
 		return programService.getOneProgram(programId);
 	}
 	
@@ -39,7 +39,7 @@ public class ProgramResource {
 	@DELETE
 	@Path("/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Program deleteProgram(@PathParam("programId")long programId) {
+	public Program deleteProgram(@PathParam("programId")String programId) {
 		return programService.deleteProgram(programId);
 	}
 	
@@ -51,8 +51,8 @@ public class ProgramResource {
 	}
 	
 	
-		public void addProgram(String programName) {
-			programService.addProgram(programName);
+		public void addProgram(String programId,String programName) {
+			programService.addProgram(programId,programName);
 	}
 	
 	//update
@@ -60,7 +60,7 @@ public class ProgramResource {
 	@Path("/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Program updateProgram(@PathParam("programId")long programId,Program p) {
+	public Program updateProgram(@PathParam("programId")String programId,Program p) {
 		return programService.updateProgramInfo(programId, p);
 	}
 	

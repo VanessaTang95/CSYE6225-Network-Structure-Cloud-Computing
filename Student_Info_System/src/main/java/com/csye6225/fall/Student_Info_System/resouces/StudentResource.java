@@ -15,16 +15,16 @@ public class StudentResource {
 	//get student by program
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Student> getStudentsByProgram(@QueryParam("program")String program){
-		if(program==null) {
+	public List<Student> getStudentsByProgram(@QueryParam("department")String department){
+		if(department==null) {
 			return studentService.getAllStudents();
 		}
-		return studentService.getStudentByProgram(program);
+		return studentService.getStudentByDepartment(department);
 	}
 
 	//get Students by course
 	@GET
-	@Path("{course}")
+	@Path("/{course}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudentsByCourse(@PathParam("course")String course){
 		if(course==null) return studentService.getAllStudents();
@@ -35,7 +35,7 @@ public class StudentResource {
 	@GET
 	@Path("studentId/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Student getStudent(@PathParam("studentId")long studentId) {
+	public Student getStudent(@PathParam("studentId")String studentId) {
 		return studentService.getStudent(studentId);
 	}
 	
@@ -43,7 +43,7 @@ public class StudentResource {
 	@DELETE
 	@Path("/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Student deleteStudent(@PathParam("studentId")long studentId) {
+	public Student deleteStudent(@PathParam("studentId")String studentId) {
 		return studentService.deleteStudent(studentId);
 	}
 	
@@ -60,7 +60,7 @@ public class StudentResource {
 	@Path("/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Student updateStudent(@PathParam("studentId")long studentId,Student s) {
+	public Student updateStudent(@PathParam("studentId")String studentId,Student s) {
 		return studentService.updateStuInfo(studentId, s);
 	}
 	

@@ -27,29 +27,28 @@ public class ProfessorResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Professor> getProfessorsByProgram(
-			@QueryParam("program") String program) {
+	public List<Professor> getProfessorsByDepartment(
+			@QueryParam("department") String department) {
 		
-		if (program == null) {
+		if (department == null) {
 			return profService.getAllProfessors();
 		}
-		return profService.getProfessorsByProgram(program);
+		return profService.getProfessorsByDepartment(department);
 		
 	}
-	
 	
 	// ... webapi/professor/1 
 	@GET
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Professor getProfessor(@PathParam("professorId") long profId) {
-		return profService.getProfessor(profId);
+	public Professor getProfessor(@PathParam("professorId") String profId) {
+		return profService.getProfessorByProfessorId(profId);
 	}
 	
 	@DELETE
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Professor deleteProfessor(@PathParam("professorId") long profId) {
+	public Professor deleteProfessor(@PathParam("professorId") String profId) {
 		return profService.deleteProfessor(profId);
 	}
 	
@@ -64,12 +63,12 @@ public class ProfessorResource {
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Professor updateProfessor(@PathParam("professorId") long profId, 
+	public Professor updateProfessor(@PathParam("professorId") String profId, 
 			Professor prof) {
 		return profService.updateProfessorInformation(profId, prof);
 	}
 	
-	public void addProfessor(String name, Date joiningDate) {
-		profService.addProfessor(name, joiningDate);
+	public void addProfessor(String firstname,String lastname, Date joiningDate,String department) {
+		profService.addProfessor(firstname, lastname, joiningDate, department);;
 	}
 }

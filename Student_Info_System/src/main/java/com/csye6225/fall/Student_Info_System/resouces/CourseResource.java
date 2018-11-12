@@ -21,33 +21,41 @@ import com.csye6225.fall.Student_Info_System.services.CourseService;
 public class CourseResource {
 	CourseService courseservice=new CourseService();
 	
-	//get student by program
+	//get student by department
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Course> getCoursesByProgram(@QueryParam("programId")long programId){
-		if(programId==0) {
+	public List<Course> getCoursesByProgram(@QueryParam("department")String department){
+		if(department==null) {
 			return courseservice.getAllCourse();
 		}
-		return courseservice.getCourseByProgram(programId);
+		return courseservice.getCourseByDepartment(department);
 	}
 	
 	//get Course by id
 	@GET
 	@Path("/{courseId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Course getCourse(@PathParam("courseId")long courseId) {
+	public Course getCourse(@PathParam("courseId")String courseId) {
 		return courseservice.getOneCourse(courseId);
+	}
+	
+	//get Course by professor
+	@GET
+	@Path("/professor/{professorId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Course> getCoursesByProfessor(@PathParam("professorId")String professorId ){
+		return courseservice.getCourseByProfessor(professorId);
 	}
 	
 	//Delete
 	@DELETE
 	@Path("/{courseId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Course deleteCourse(@PathParam("courseId")long courseId) {
+	public Course deleteCourse(@PathParam("courseId")String courseId) {
 		return courseservice.deleteCourse(courseId);
 	}
 	
-	//add
+	//POST
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -60,7 +68,7 @@ public class CourseResource {
 	@Path("/{courseId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Course updateCourse(@PathParam("courseId")long courseId,Course c) {
+	public Course updateCourse(@PathParam("courseId")String courseId,Course c) {
 		return courseservice.updateCourseInfo(courseId, c);
 	}
 	
