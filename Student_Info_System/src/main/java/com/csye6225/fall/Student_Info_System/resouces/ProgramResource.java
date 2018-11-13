@@ -29,7 +29,7 @@ public class ProgramResource {
 
 	//get program by id
 	@GET
-	@Path("/getOneProgram/{programId}")
+	@Path("/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Program getProgram(@PathParam("programId")String programId) {
 		return programService.getOneProgram(programId);

@@ -44,8 +44,8 @@ public class StudentService {
 
 	
 //adding a student
-	public void addStudent(String firstName, String lastName, String joiningDate, String department) {
-		Student s=new Student(firstName,lastName,joiningDate,department);
+	public void addStudent(String studentId,String firstName, String lastName, String joiningDate, String department) {
+		Student s=new Student(studentId,firstName,lastName,joiningDate,department);
 		mapper.save(s);
 	}
 	
@@ -57,8 +57,12 @@ public class StudentService {
 	
 	//deleting one student
 	public Student deleteStudent(String stuId) {
-		List<Student> target=filter(stuId);
-		if(target.size()!=0) {
+		Map<String,AttributeValue> eav=new HashMap<>();
+		eav.put(":val", new AttributeValue().withS(stuId));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+				.withFilterExpression("studentId=:val").withExpressionAttributeValues(eav);
+		List<Student> target=mapper.scan(Student.class, scanExpression);//get the list after filter
+if(target.size()!=0) {
 			Student removedStudent=target.get(0);
 			mapper.delete(removedStudent);
 			return removedStudent;
@@ -66,19 +70,14 @@ public class StudentService {
 		return null;
 		
 	}
-	
-	public List<Student> filter(String s) {
-		Map<String,AttributeValue> eav=new HashMap<>();
-		eav.put(":val", new AttributeValue().withS(s));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("s=:val").withExpressionAttributeValues(eav);
-		List<Student> target=mapper.scan(Student.class, scanExpression);//get the list after filter
-		return target;
-	}
-	
+		
 	//updating Student id
 	public Student updateStuInfo(String studentId, Student s) {
-		List<Student> target=filter(studentId);
+		Map<String,AttributeValue> eav=new HashMap<>();
+		eav.put(":val", new AttributeValue().withS(studentId));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+				.withFilterExpression("studentId=:val").withExpressionAttributeValues(eav);
+		List<Student> target=mapper.scan(Student.class, scanExpression);//get the list after filter
 		if(target.size()!=0) {
 			String Id=target.get(0).getId();
 			s.setId(Id);
@@ -102,6 +101,11 @@ public class StudentService {
 	
 	//get students in a department
 	public List<Student> getStudentByDepartment(String department){
-		return filter(department);
+		Map<String,AttributeValue> eav=new HashMap<>();
+		eav.put(":val", new AttributeValue().withS(department));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+				.withFilterExpression("department=:val").withExpressionAttributeValues(eav);
+		List<Student> target=mapper.scan(Student.class, scanExpression);//get the list after filter
+		return target;
 	}
 }

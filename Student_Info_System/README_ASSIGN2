@@ -1,0 +1,144 @@
+Api instruction:
+For each entity:
+<Professors>
+1.GET
+	webapi/professors
+	webapi/professors/{professorId} 
+		e.g.:webapi/professors/1
+2.POST
+	webapi/professors
+	body{
+	"professorId":2
+	"firstName":"Harry",
+	"lastName":"Potter",
+	"joiningDate":"2018/01/01",
+	"department":"Magic"
+	}
+3.PUT
+	webapi/professors/{professorId}
+	body{
+	"professorId":3,
+	"firstName":"Stan",
+	"lastName":"Lee",
+	"joiningDate":"20xx/xx/xx",
+	"department":"MCU Study"
+	}
+4.DELETE
+	webapi/professors/{professorId}
+	
+<Course>
+1.GET
+	webapi/courses
+	webapi/courses/{courseId}
+2.POST
+	webapi/courses
+	body{
+	"courseId":2,
+	"courseName":"Data Management",
+	"department":"IS"
+	}
+3.PUT
+	webapi/courses/{courseId}
+	body{
+		"courseId":2,
+	"courseName":"Data Management",
+	"department":"IS",
+	"professorId":1,
+	"taId":2,
+	"boardId":3
+	}
+4.DELETE
+	webapi/courses/{courseId}
+	
+<Board>
+1.GET
+	webapi/boards
+	webapi/boards/{boardId}
+2.POST
+	webapi/boards
+	body{
+	 "boardId": "2",
+     "courseId": "1"
+	}
+3.PUT
+	webapi/boards/{boardId}
+	body{
+	 "boardId": "2",
+     "courseId": "12"
+	}
+4.DELETE
+	webapi/boards/{boardId}
+
+<Announcement>
+1.GET
+	webapi/announcements
+	webapi/announcements/{boardId}_{annoucementId}
+2.POST
+	webapi/announcements
+	body{
+	     "annnouncementText": "this is the 2nd message",
+    	 "announcementId": "1",
+    	 "boardId": "2"
+	}
+3.PUT
+	webapi/announcements/{boardId}_{annoucementId}
+	body{
+	     "annnouncementText": "everything's perfect",
+    	 "announcementId": "1",
+    	 "boardId": "2"
+	}
+4.DELETE
+	webapi/announcements/{boardId}_{annoucementId}
+	
+	
+	
+	
+<Student>
+1.GET
+	webapi/students
+	webapi/students/{studentId}
+2.POST
+	webapi/students
+	body{
+	 "department": "CS",
+        "firstName": "Lily",
+        "imageUrl": "N/A",
+        "joiningDate": "2015/01/01",
+        "lastName": "Florence",
+        "registeredCourses": [1],
+        "studentId": "2"
+	}
+3.PUT
+	webapi/students/{studentId}
+	body{
+	
+        "department": "CS",
+        "firstName": "Lily",
+        "imageUrl": "http://www.xxx.com/xxxxxx",
+        "joiningDate": "2017/12/12",
+        "lastName": "Florence",
+        "registeredCourses": [],
+        "studentId": "2"
+	}
+4.DELETE
+	webapi/students/{studentId}
+
+<Program>
+1.GET
+	webapi/programs
+	webapi/programs/{programId}
+2.POST
+	webapi/programs
+	body{
+	 "programId": "2",
+     "programName": "IS"
+	}
+3.PUT
+	webapi/programs/{programId}
+	body{
+	  "programId": "2",
+        "programName": "IS",
+        "coursesOfProgram": ["1","2"]
+	}
+4.DELETE
+	webapi/programs/{programId}

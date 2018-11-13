@@ -74,19 +74,9 @@ public class AnnouncementService {
 	
 	//update
 	public Announcements updateAnnouncement(String announcementId,String boardId,Announcements a) {
-		Map<String,AttributeValue> eav=new HashMap<>();
-		eav.put(":val1", new AttributeValue().withS(announcementId));
-		eav.put(":val2", new AttributeValue().withS(boardId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("announcementId=:val1 and boardId=:val2").withExpressionAttributeValues(eav);
-		List<Announcements> result=mapper.scan(Announcements.class, scanExpression);
-		if(result.size()!=0) {
-			String Id=result.get(0).getId();
-			a.setId(Id);
-			mapper.save(a);
-			return mapper.load(Announcements.class,Id);
-		}
-		return null;
+		deleteAnnouncement(a.getAnnouncementId(), a.getBoardId());
+		mapper.save(a);
+		return a;
 	}
 	
 }

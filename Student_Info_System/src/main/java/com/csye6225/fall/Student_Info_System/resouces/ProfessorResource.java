@@ -68,7 +68,7 @@ public class ProfessorResource {
 		return profService.updateProfessorInformation(profId, prof);
 	}
 	
-	public void addProfessor(String firstname,String lastname, Date joiningDate,String department) {
-		profService.addProfessor(firstname, lastname, joiningDate, department);;
+	public void addProfessor(String professorId,String firstname,String lastname, Date joiningDate,String department) {
+		profService.addProfessor(professorId,firstname, lastname, joiningDate, department);;
 	}
 }

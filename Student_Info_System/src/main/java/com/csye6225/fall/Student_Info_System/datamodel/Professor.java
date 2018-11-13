@@ -20,7 +20,8 @@ public class Professor {
 	
 	}
 	
-	public Professor(String firstName,String lastName, String joiningDate, String department ) {
+	public Professor(String professorId,String firstName,String lastName, String joiningDate, String department ) {
+		this.professorId=professorId;
 		this.firstName=firstName;
 		this.LastName=lastName;
 		this.joiningDate=joiningDate;

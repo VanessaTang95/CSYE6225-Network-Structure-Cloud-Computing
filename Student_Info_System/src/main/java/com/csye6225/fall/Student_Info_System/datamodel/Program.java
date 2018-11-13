@@ -1,6 +1,5 @@
 package com.csye6225.fall.Student_Info_System.datamodel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -14,17 +13,11 @@ public class Program {
 	private String programName;
 	private String programId;
 	private List<String> coursesOfProgram;
-	private List<Student> enrolledStudent;
-	private List<Professor> hasProfessors;
 	
 	public Program() {
-		this.coursesOfProgram=new ArrayList<>();
-		this.enrolledStudent=new ArrayList<>();
-		this.hasProfessors=new ArrayList<>();
 	}
 	
 	public Program(String programId,String programName) {
-		this();
 		this.programId=programId;
 		this.programName=programName;
 	}
@@ -65,24 +58,6 @@ public class Program {
 	public void setCoursesOfProgram(List<String> coursesOfProgram) {
 		this.coursesOfProgram = coursesOfProgram;
 	}
-
-	@DynamoDBAttribute(attributeName="enrolledStudentsId")
-	public List<Student> getEnrolledStudent() {
-		return enrolledStudent;
-	}
-
-	public void setEnrolledStudent(List<Student> enrolledStuId) {
-		this.enrolledStudent = enrolledStuId;
-	}
-
-	@DynamoDBAttribute(attributeName="professorID")
-	public List<Professor> getHasProfessors() {
-		return hasProfessors;
-	}
-
-	public void setHasProfessors(List<Professor> professorsId) {
-		this.hasProfessors = professorsId;
-	}
 	
+		}
 	
-}

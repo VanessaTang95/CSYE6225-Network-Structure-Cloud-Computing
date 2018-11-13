@@ -18,7 +18,8 @@ public class Student {
 		
 	}
 	
-	public Student(String firstName, String lastName, String joiningDate, String department) {
+	public Student(String studentId,String firstName, String lastName, String joiningDate, String department) {
+		this.studentId=studentId;
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.joiningDate=joiningDate;

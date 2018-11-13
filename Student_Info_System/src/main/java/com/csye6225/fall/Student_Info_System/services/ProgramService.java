@@ -32,7 +32,7 @@ public class ProgramService {
 			Map<String,AttributeValue> eav=new HashMap<>();
 			eav.put(":val",new AttributeValue().withS(programId));
 			DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-					.withFilterExpression("ProgramId=:val").withExpressionAttributeValues(eav);
+					.withFilterExpression("programId=:val").withExpressionAttributeValues(eav);
 			List<Program> target=mapper.scan(Program.class, scanExpression);
 			if(target.size()!=0) {
 				return target.get(0);
@@ -58,7 +58,7 @@ public class ProgramService {
 		Map<String,AttributeValue> eav=new HashMap<>();
 		eav.put(":val",new AttributeValue().withS(programId));
 		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("ProgramId=:val").withExpressionAttributeValues(eav);
+				.withFilterExpression("programId=:val").withExpressionAttributeValues(eav);
 		List<Program> target=mapper.scan(Program.class, scanExpression);
 		if(target.size()!=0) {
 			Program removedProgram=target.get(0);
@@ -73,7 +73,7 @@ public class ProgramService {
 		Map<String,AttributeValue> eav=new HashMap<>();
 		eav.put(":val",new AttributeValue().withS(programId));
 		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("ProgramId=:val").withExpressionAttributeValues(eav);
+				.withFilterExpression("programId=:val").withExpressionAttributeValues(eav);
 		List<Program> target=mapper.scan(Program.class, scanExpression);
 		if(target.size()!=0) {
 			String Id=target.get(0).getId();
