@@ -1,5 +1,6 @@
 package com.csye6225.fall.Student_Info_System.datamodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -11,19 +12,22 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 @DynamoDBTable(tableName="Student")
 public class Student {
-	private String Id, studentId, firstName, lastName, joiningDate, department, imageUrl;
-	private List<String> registeredCourses;//has list of registered courseIds
+	private String Id, firstName, lastName, joiningDate, department, imageUrl;
+	private List<String> registeredCourses=new ArrayList<>();//has list of registered courseIds
+	private String email;
+	private String studentId;
 	
 	public Student() {
 		
 	}
 	
-	public Student(String studentId,String firstName, String lastName, String joiningDate, String department) {
+	public Student(String studentId,String firstName, String lastName, String joiningDate, String department, String email) {
 		this.studentId=studentId;
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.joiningDate=joiningDate;
 		this.department=department;
+		this.email=email;
 	}
 
 	
@@ -37,6 +41,22 @@ public class Student {
 		this.department = department;
 		this.imageUrl = imageUrl;
 		this.registeredCourses = registeredCourses;
+	}
+	
+	
+
+	public Student(String id, String firstName, String lastName, String joiningDate, String department, String imageUrl,
+			List<String> registeredCourses, String email, String studentId) {
+		super();
+		Id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.joiningDate = joiningDate;
+		this.department = department;
+		this.imageUrl = imageUrl;
+		this.registeredCourses = registeredCourses;
+		this.email = email;
+		this.studentId = studentId;
 	}
 
 	@DynamoDBHashKey(attributeName="Id")
@@ -99,6 +119,11 @@ public class Student {
 		return registeredCourses;
 	}
 
+	public void setRegisteredCourses(List<String> registeredCourses) {
+		this.registeredCourses = registeredCourses;
+	}
+
+	
 	@DynamoDBAttribute(attributeName="imageUrl")
 	public String getImageUrl() {
 		return imageUrl;
@@ -108,8 +133,16 @@ public class Student {
 		this.imageUrl = imageUrl;
 	}
 
-	public void setRegisteredCourses(List<String> registeredCourses) {
-		this.registeredCourses = registeredCourses;
+
+	
+	
+	@DynamoDBAttribute(attributeName="email")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@DynamoDBIgnore
@@ -117,7 +150,7 @@ public class Student {
 	public String toString() {
 		return "StudentId:"+getStudentId()+", Name:"+getLastName()+" "+getFirstName()
 		+", Department:"+getDepartment()+", Joining Date:"+getJoiningDate()+", Regiester Course:"
-		+getRegisteredCourses()+", ImageUrl:"+getImageUrl();
+		+getRegisteredCourses()+", ImageUrl:"+getImageUrl()+", email:"+getEmail();
 	}
 	
 }

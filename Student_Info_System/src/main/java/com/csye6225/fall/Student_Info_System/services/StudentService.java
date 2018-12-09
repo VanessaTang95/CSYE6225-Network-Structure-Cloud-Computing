@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.csye6225.fall.Student_Info_System.database.InMemoryDatabase;
+import com.csye6225.fall.Student_Info_System.datamodel.Course;
 import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
 import com.csye6225.fall.Student_Info_System.datamodel.Student;
 
@@ -44,8 +46,8 @@ public class StudentService {
 
 	
 //adding a student
-	public void addStudent(String studentId,String firstName, String lastName, String joiningDate, String department) {
-		Student s=new Student(studentId,firstName,lastName,joiningDate,department);
+	public void addStudent(String studentId,String firstName, String lastName, String joiningDate, String department,String email) {
+		Student s=new Student(studentId,firstName,lastName,joiningDate,department,email);
 		mapper.save(s);
 	}
 	
@@ -107,5 +109,28 @@ if(target.size()!=0) {
 				.withFilterExpression("department=:val").withExpressionAttributeValues(eav);
 		List<Student> target=mapper.scan(Student.class, scanExpression);//get the list after filter
 		return target;
+	}
+	
+	
+	//register Courses
+	//a student can register for max 3 courses
+	public Student registerCourses(String studentId, String courseId) throws Exception {
+		RegisterService registerService=new RegisterService();
+		Course course=new Course();
+		course=new CourseService().getOneCourse(courseId);
+		
+		Student student=getStudent(studentId);
+		List<String> registeredCourses=student.getRegisteredCourses();
+		if(registeredCourses.size()<3) {
+			student.getRegisteredCourses().add(courseId);
+			registerService.subscribeToSNS(course.getNotificationTopic(), student.getEmail());
+			System.out.println("Register email send! Please check your email!");
+			updateStuInfo(studentId, student);
+			new CourseService().updateCourseInfo(courseId, course);
+		}else {
+			throw new Exception("You have already regiested 3 courses! Register request denied!");
+		}
+		
+		return student;
 	}
 }

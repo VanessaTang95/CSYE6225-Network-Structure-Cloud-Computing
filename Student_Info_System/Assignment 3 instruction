@@ -1,0 +1,29 @@
+1. add course
+<Course>
+	path:webapi/courses
+	body{  
+		 "courseId":"Cooking001",
+         "courseName":"Sloppy Joe",
+         "professorId":"1",
+         "taId":"2",
+         "department":"Nutrition",
+         "boardId":"board102"
+	}
+	
+2. add a new Student
+	path:webapi/students
+	body{
+         "studentId":"2",
+         "firstName":"Mia",
+         "lastName":"Brown",
+         "joiningDate":"2018/1/1",
+         "department":"CCIS",
+         "email":"tang.yue@husky.neu.edu"
+	}
+	
+3. register a class
+	path:webapi/students/3/register
+	body{
+	  "studentId":"3",
+      "courseId":"Cooking001"
+	  }

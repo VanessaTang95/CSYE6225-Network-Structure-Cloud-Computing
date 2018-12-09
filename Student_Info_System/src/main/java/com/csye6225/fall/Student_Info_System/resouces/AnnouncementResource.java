@@ -34,6 +34,17 @@ public class AnnouncementResource {
 		return a_Service.getOneAnnouncement(announcementId, boardId);
 	}
 	
+	//get announcements by boardId
+	@GET
+	@Path("/board/{boardId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Announcements> getAnnouncementsByBoard(@PathParam("boardId")String boardId){
+		if(boardId==null) {
+			return a_Service.getAllAnnouncements();
+		}
+		return a_Service.getAnnoucementsByBoard(boardId);
+	}
+	
 	//POST
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

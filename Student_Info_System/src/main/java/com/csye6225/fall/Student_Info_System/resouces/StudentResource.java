@@ -5,6 +5,9 @@ import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import org.aopalliance.reflect.Metadata;
+
+import com.csye6225.fall.Student_Info_System.datamodel.Course;
 import com.csye6225.fall.Student_Info_System.datamodel.Student;
 import com.csye6225.fall.Student_Info_System.services.StudentService;
 
@@ -12,7 +15,7 @@ import com.csye6225.fall.Student_Info_System.services.StudentService;
 public class StudentResource {
 	StudentService studentService=new StudentService();
 	
-	//get student by program
+	//get student by department or all students
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudentsByProgram(@QueryParam("department")String department){
@@ -54,6 +57,17 @@ public class StudentResource {
 	public Student addStudent(Student s) {
 		return studentService.addStudent(s);
 	}
+	
+	//register
+	
+	@POST
+	@Path("/{studentId}/register")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Student registerCourses(@PathParam("studentId")String studentId, Course course) throws Exception {
+		return studentService.registerCourses(studentId, course.getCourseId());
+	}
+	
 	
 	//update
 	@PUT

@@ -39,10 +39,25 @@ public class AnnouncementService {
 		return null;
 	}
 	
+	
+	//get announcement by board
+	public List<Announcements> getAnnoucementsByBoard(String boardId){
+		Map<String,AttributeValue> eav=new HashMap<String, AttributeValue>();
+		eav.put(":val", new AttributeValue().withS(boardId));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+				.withFilterExpression("boardId=:val").withExpressionAttributeValues(eav);
+		List<Announcements> result=mapper.scan(Announcements.class, scanExpression);
+		if(result.size()==0) {
+			return null;
+		}
+		return result;
+	}
+	
+	
 	//add annoucements
-	public void addAnnouncement(String annoucementId, String announcementText, String boardId) {
+	public void addAnnouncement(String annoucementId,String boardId, String announcementText ) {
 		if(announcementText.length()<=160) {
-		Announcements newAnn=new Announcements(annoucementId,announcementText,boardId);
+		Announcements newAnn=new Announcements(annoucementId,boardId,announcementText);
 		mapper.save(newAnn);
 		}
 		else

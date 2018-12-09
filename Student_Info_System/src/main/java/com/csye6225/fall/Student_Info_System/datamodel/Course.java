@@ -18,6 +18,10 @@ public class Course {
 	private String boardId;
 	private List<String> roster;//has registered student Id list
 	private List<String> lectures;//has lecture id
+	private List<String> announcements;
+	private String notificationTopic;//New field for storing sns topic
+	
+	
 	public Course() {}
 	
 	public Course(String courseId,String courseName,String department){
@@ -39,6 +43,25 @@ public class Course {
 		this.boardId = boardId;
 		this.roster = roster;
 		this.lectures = lectures;
+	}
+	
+	
+
+	public Course(String id, String courseId, String courseName, String professorId, String taId, String department,
+			String boardId, List<String> roster, List<String> lectures, List<String> announcements,
+			String notificationTopic) {
+		super();
+		Id = id;
+		this.courseId = courseId;
+		this.courseName = courseName;
+		this.professorId = professorId;
+		this.taId = taId;
+		this.department = department;
+		this.boardId = boardId;
+		this.roster = roster;
+		this.lectures = lectures;
+		this.announcements = announcements;
+		this.notificationTopic = notificationTopic;
 	}
 
 	@DynamoDBHashKey(attributeName="Id")
@@ -114,5 +137,25 @@ public class Course {
 	public void setLectures(List<String> lectures) {
 		this.lectures = lectures;
 	}
+
+	@DynamoDBAttribute(attributeName="announcement")
+	public List<String> getAnnouncements() {
+		return announcements;
+	}
+
+	public void setAnnouncements(List<String> announcements) {
+		this.announcements = announcements;
+	}
+
+	@DynamoDBAttribute(attributeName="notificationTopic")
+	public String getNotificationTopic() {
+		return notificationTopic;
+	}
+
+	public void setNotificationTopic(String notificationTopic) {
+		this.notificationTopic = notificationTopic;
+	}
+	
+	
 	
 }

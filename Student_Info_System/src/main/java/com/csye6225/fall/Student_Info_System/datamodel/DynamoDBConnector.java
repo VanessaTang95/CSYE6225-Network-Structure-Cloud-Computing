@@ -26,11 +26,11 @@ public class DynamoDBConnector {
 				.withCredentials(cp)
 				.withRegion("us-west-2")
 				.build();
-		System.out.println("Creat client successful!");
+		System.out.println("Create client successful!");
 		}
 	}
 
-	public AmazonDynamoDB getClient() {
+	public static AmazonDynamoDB getClient() {
 		return dynamoDb;
 	}
 }

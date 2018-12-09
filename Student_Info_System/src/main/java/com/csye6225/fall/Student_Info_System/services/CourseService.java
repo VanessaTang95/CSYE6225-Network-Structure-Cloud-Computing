@@ -12,10 +12,16 @@ import com.csye6225.fall.Student_Info_System.database.InMemoryDatabase;
 import com.csye6225.fall.Student_Info_System.datamodel.Course;
 import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
 
+//import amazonaws.lambda.demo.LambdaFunction;
+
 	public class CourseService {
 	//	static HashMap<Long,Course> course_Map=InMemoryDatabase.getCourseDB();
 		static DynamoDBConnector dynamoDb;
 		DynamoDBMapper mapper;
+		
+		BoardService boardService=new BoardService();
+		//LambdaFunction lambdaService=new LambdaFunction();
+		
 		
 		public CourseService() {
 			dynamoDb=new DynamoDBConnector();
@@ -77,13 +83,30 @@ import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
 				String boardId, List<String> roster, List<String> lectures) {
 			Course course=new Course(courseId, courseName, professorId, taId, department,
 			boardId, roster, lectures);
-			mapper.save(course);
+			addCourse(course);
 		}
 		
 		
 		public Course addCourse(Course course) {
-			mapper.save(course);
-			return course;
+			Course c=new Course();
+			c.setAnnouncements(course.getAnnouncements());
+			c.setBoardId(course.getBoardId());
+			c.setCourseId(course.getCourseId());
+			c.setCourseName(course.getCourseName());
+			c.setDepartment(course.getDepartment());
+			c.setLectures(course.getLectures());
+			c.setProfessorId(course.getProfessorId());
+			c.setRoster(course.getRoster());
+			c.setTaId(course.getTaId());
+			
+			//sns
+			RegisterService registerService=new RegisterService();
+			c.setNotificationTopic(registerService.generateTopicArn(course.getCourseId()));
+			
+			mapper.save(c);
+			boardService.addBoard(c.getBoardId(), c.getCourseId());
+			
+			return c;
 		}
 		
 		
