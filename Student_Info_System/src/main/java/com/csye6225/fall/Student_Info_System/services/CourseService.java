@@ -7,10 +7,16 @@ import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.document.Attribute;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.model.CreateTopicRequest;
+import com.amazonaws.services.sns.model.CreateTopicResult;
 import com.csye6225.fall.Student_Info_System.database.InMemoryDatabase;
+import com.csye6225.fall.Student_Info_System.datamodel.Board;
 import com.csye6225.fall.Student_Info_System.datamodel.Course;
 import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
+import com.csye6225.fall.Student_Info_System.datamodel.SNSConnector;
 
 //import amazonaws.lambda.demo.LambdaFunction;
 
@@ -20,13 +26,17 @@ import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
 		DynamoDBMapper mapper;
 		
 		BoardService boardService=new BoardService();
-		//LambdaFunction lambdaService=new LambdaFunction();
-		
+		static SNSConnector sns;
+		AmazonSNS snsClient;
 		
 		public CourseService() {
 			dynamoDb=new DynamoDBConnector();
 			dynamoDb.init();
 			mapper=new DynamoDBMapper(dynamoDb.getClient());
+			
+			sns=new SNSConnector();
+			sns.init();
+			snsClient=sns.getClient();
 		}
 		
 		//getting course by courseId
@@ -79,34 +89,51 @@ import com.csye6225.fall.Student_Info_System.datamodel.DynamoDBConnector;
 		
 		
 	//adding a course
-		public void addCourse(String courseId, String courseName, String professorId, String taId, String department,
-				String boardId, List<String> roster, List<String> lectures) {
-			Course course=new Course(courseId, courseName, professorId, taId, department,
-			boardId, roster, lectures);
-			addCourse(course);
+		public void addCourse(String courseId, String courseName, String professorId, String taId, String department
+				) /*throws Exception*/ {
+			/*Map<String,AttributeValue> eav=new HashMap<>();
+			eav.put(":val", new AttributeValue().withS(courseId));
+			DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+					.withFilterExpression("courseId=:val").withExpressionAttributeValues(eav);
+			List<Course> courseItems=mapper.scan(Course.class, scanExpression);
+			if(courseItems.size()!=0) {
+				throw new Exception("This course already exists!");
+			}
+			else {*/
+			DynamoDBScanExpression dbScanExpression=new DynamoDBScanExpression();			
+			List<Board> boardItems=mapper.scan(Board.class, dbScanExpression);			
+			String boardId=String.valueOf(boardItems.size()+1);
+			String rosterId=String.valueOf(new CourseService().getOneCourse(courseId).getRoster().size()+1);
+			Course cur_course=new Course(courseId,courseName,professorId,taId,department);
+			cur_course.getRoster().add(rosterId);
+			boardService.addBoard(boardId, courseId);
+			CreateTopicRequest createTopicRequest=new CreateTopicRequest(courseId);
+			CreateTopicResult createTopicResult=snsClient.createTopic(createTopicRequest);
+			cur_course.setNotificationTopic(createTopicResult.getTopicArn());
+			mapper.save(cur_course);
+			//}
 		}
 		
 		
-		public Course addCourse(Course course) {
-			Course c=new Course();
-			c.setAnnouncements(course.getAnnouncements());
-			c.setBoardId(course.getBoardId());
-			c.setCourseId(course.getCourseId());
-			c.setCourseName(course.getCourseName());
-			c.setDepartment(course.getDepartment());
-			c.setLectures(course.getLectures());
-			c.setProfessorId(course.getProfessorId());
-			c.setRoster(course.getRoster());
-			c.setTaId(course.getTaId());
+		public Course addCourse(Course course)/* throws Exception*/ {
+
+		/*	String courseId=course.getCourseId();
+
+			Map<String,AttributeValue> eav=new HashMap<>();
+			eav.put(":val", new AttributeValue().withS(courseId));
+			DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+					.withFilterExpression("courseId=:val").withExpressionAttributeValues(eav);
+			List<Course> courseItems=mapper.scan(Course.class, scanExpression);
+			if(courseItems.size()!=0) {
+				throw new Exception("This course already exists!");
+				
+			}else {
+*/			CreateTopicRequest createTopicRequest=new CreateTopicRequest(course.getCourseId());
+			CreateTopicResult createTopicResult=snsClient.createTopic(createTopicRequest);
+			course.setNotificationTopic(createTopicResult.getTopicArn());
+			mapper.save(course);
 			
-			//sns
-			RegisterService registerService=new RegisterService();
-			c.setNotificationTopic(registerService.generateTopicArn(course.getCourseId()));
-			
-			mapper.save(c);
-			boardService.addBoard(c.getBoardId(), c.getCourseId());
-			
-			return c;
+			return mapper.load(Course.class,course.getId());
 		}
 		
 		

@@ -59,7 +59,7 @@ public class CourseResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Course addCourse(Course c) {
+	public Course addCourse(Course c) /*throws Exception*/ {
 				return courseservice.addCourse(c);
 	}
 	

@@ -1,5 +1,6 @@
 package com.csye6225.fall.Student_Info_System.datamodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -16,8 +17,8 @@ public class Course {
 	private String taId;
 	private String department;
 	private String boardId;
-	private List<String> roster;//has registered student Id list
-	private List<String> lectures;//has lecture id
+	private List<String> roster=new ArrayList<String>();//has registered student Id list
+	//private List<String> lectures;//has lecture id
 	private List<String> announcements;
 	private String notificationTopic;//New field for storing sns topic
 	
@@ -30,38 +31,20 @@ public class Course {
 		this.department=department;
 	}
 	
-	
-	
-	public Course(String courseId, String courseName, String professorId, String taId, String department,
-			String boardId, List<String> roster, List<String> lectures) {
-		super();
-		this.courseId = courseId;
-		this.courseName = courseName;
-		this.professorId = professorId;
-		this.taId = taId;
-		this.department = department;
-		this.boardId = boardId;
-		this.roster = roster;
-		this.lectures = lectures;
-	}
-	
-	
 
-	public Course(String id, String courseId, String courseName, String professorId, String taId, String department,
-			String boardId, List<String> roster, List<String> lectures, List<String> announcements,
-			String notificationTopic) {
+	public Course(String courseId, String courseName, String professorId, String taId, String department
+			) {
 		super();
-		Id = id;
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.professorId = professorId;
 		this.taId = taId;
 		this.department = department;
-		this.boardId = boardId;
-		this.roster = roster;
-		this.lectures = lectures;
-		this.announcements = announcements;
-		this.notificationTopic = notificationTopic;
+		//this.boardId = boardId;
+		//this.roster = roster;
+//		this.lectures = lectures;
+		//this.announcements = announcements;
+		//this.notificationTopic = notificationTopic;
 	}
 
 	@DynamoDBHashKey(attributeName="Id")
@@ -129,14 +112,14 @@ public class Course {
 		this.roster = roster;
 	}
 
-	@DynamoDBAttribute(attributeName="lectures")
-	public List<String> getLectures() {
-		return lectures;
-	}
-
-	public void setLectures(List<String> lectures) {
-		this.lectures = lectures;
-	}
+//	@DynamoDBAttribute(attributeName="lectures")
+//	public List<String> getLectures() {
+//		return lectures;
+//	}
+//
+//	public void setLectures(List<String> lectures) {
+//		this.lectures = lectures;
+//	}
 
 	@DynamoDBAttribute(attributeName="announcement")
 	public List<String> getAnnouncements() {

@@ -17,7 +17,6 @@ public class Board {
 
 	
 	public Board(String boardId, String courseId) {
-		super();
 		this.boardId = boardId;
 		this.courseId = courseId;
 	}
